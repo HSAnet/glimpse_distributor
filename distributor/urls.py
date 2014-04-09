@@ -4,9 +4,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
 
 urlpatterns = patterns('',
-    # Examples:
-    # url(r'^$', 'distributor.views.home', name='home'),
-    # url(r'^blog/', include('blog.urls')),
+    url(r'^packages/', include('distributor.packages.urls', namespace='packages')),
 
     url(r'^admin/', include(admin.site.urls)),
 )
