@@ -20,10 +20,10 @@ PIDFILE="$PROJECT_PATH/deploy/$NAME.pid"
 SOCKETFILE="$PROJECT_PATH/deploy/$NAME.fcgi"
 OUTLOG="$PROJECT_PATH/deploy/logs/out.log";
 ERRLOG="$PROJECT_PATH/deploy/logs/err.log";
+RUNAS_USER="www-data";
 DAEMON="$PROJECT_PATH/bin/python";
 DAEMON_ARGS="$PROJECT_PATH/manage.py runfcgi method=threaded umask=0000 socket=$SOCKETFILE daemonize=true pidfile=$PIDFILE outlog=$OUTLOG errlog=$ERRLOG"
 SCRIPTNAME="/etc/init.d/$NAME";
-RUNAS_USER="www-data";
 
 
 # Exit if the package is not installed
