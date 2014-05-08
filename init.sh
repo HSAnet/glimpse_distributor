@@ -21,8 +21,8 @@ SOCKETFILE="$PROJECT_PATH/deploy/$NAME.fcgi"
 OUTLOG="$PROJECT_PATH/deploy/logs/out.log";
 ERRLOG="$PROJECT_PATH/deploy/logs/err.log";
 RUNAS_USER="www-data";
-DAEMON="$PROJECT_PATH/bin/python";
-DAEMON_ARGS="$PROJECT_PATH/manage.py runfcgi method=threaded umask=0000 socket=$SOCKETFILE daemonize=true pidfile=$PIDFILE outlog=$OUTLOG errlog=$ERRLOG"
+DAEMON="$PROJECT_PATH/bin/gunicorn";
+DAEMON_ARGS="$NAME:application --daemon --umask 0000 --user $RUNAS_USER --group $RUNAS_USER --socket unix:$SOCKETFILE --pid $PIDFILE --error-logfile $ERRLOG --log-file $OUTLOG";
 SCRIPTNAME="/etc/init.d/$NAME";
 
 
