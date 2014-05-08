@@ -22,7 +22,7 @@ OUTLOG="$PROJECT_PATH/deploy/logs/out.log";
 ERRLOG="$PROJECT_PATH/deploy/logs/err.log";
 RUNAS_USER="www-data";
 DAEMON="$PROJECT_PATH/bin/gunicorn";
-DAEMON_ARGS="$NAME:application --daemon --umask 0000 --user $RUNAS_USER --group $RUNAS_USER --socket unix:$SOCKETFILE --pid $PIDFILE --error-logfile $ERRLOG --log-file $OUTLOG";
+DAEMON_ARGS="distributor.wsgi:application --daemon --proxy-allow-from '127.0.0.1' --umask 0000 --user $RUNAS_USER --group $RUNAS_USER --socket unix:$SOCKETFILE --pid $PIDFILE";
 SCRIPTNAME="/etc/init.d/$NAME";
 
 
