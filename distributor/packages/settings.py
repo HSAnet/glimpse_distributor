@@ -8,4 +8,3 @@ CHANNEL_SETTINGS = getattr(settings, 'PACKAGE_CHANNEL_SETTINGS', {
     'fedora-amd64': 'FedoraAMD64Handler',
     'arch-amd64': 'ArchAMD64Handler',
 })
-
