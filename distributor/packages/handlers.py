@@ -20,3 +20,11 @@ class PackageUploadHandler(object):
 
 class DebianAMD64Handler(PackageUploadHandler):
     file_path = './debian'
+
+
+class FedoraAMD64Handler(PackageUploadHandler):
+    file_path = './fedora'
+    
+
+class ArchAMD64Handler(PackageUploadHandler):
+    file_path = './arch'
