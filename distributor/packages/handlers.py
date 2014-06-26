@@ -12,8 +12,6 @@ class PackageUploadHandler(object):
         if self.file_path is None:
             raise Exception("Please define a file name for uploaded packages of this channel.")
 
-        print(package_file.read())
-
         with open(self.file_path, 'wb') as f:
             f.write(package_file.read())
 
