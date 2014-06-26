@@ -1,11 +1,20 @@
 import json
 
 from django.http import HttpResponse, HttpResponseBadRequest
-from django.views.generic.edit import BaseFormView
+from django.views.generic.edit import View, BaseFormView
 
 from distributor.packages import handlers
 from distributor.packages.forms import PackageUploadForm
 from distributor.packages.settings import CHANNEL_SETTINGS
+
+
+class PackageVersionView(View):
+    def get(self, request, *args, **kwargs):
+        version = '0.0.0'
+        response = {
+            'version': version
+        }
+        return HttpResponse(json.dumps(response))
 
 
 class PackageUploadView(BaseFormView):
