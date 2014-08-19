@@ -1,10 +1,10 @@
 from django.conf import settings
+from os.path import expanduser
 
-
-STORAGE_ROOT = getattr(settings, 'PACKAGES_STORAGE_ROOT', '')
+STORAGE_ROOT = getattr(settings, 'PACKAGES_STORAGE_ROOT', '%s/packages' % (expanduser('~')))
 
 CHANNEL_SETTINGS = getattr(settings, 'PACKAGE_CHANNEL_SETTINGS', {
-    'debian-amd64': 'DebianAMD64Handler',
-    'fedora-amd64': 'FedoraAMD64Handler',
-    'arch-amd64': 'ArchAMD64Handler',
+    'ubuntu-trusty': 'UbuntuTrustyHandler',
+    'ubuntu-precise': 'UbuntuPreciseHandler',
+    'rpi-raspbian': 'RpiRaspbianHandler'
 })
