@@ -6,7 +6,7 @@ from django.contrib import admin
 
 
 urlpatterns = patterns('',
-    url(r'^packages/', include('distributor.packages.urls', namespace='packages')),
+    url(r'^api/', include('distributor.packages.urls', namespace='packages')),
 
     url(r'^admin/', include(admin.site.urls)),
 )
