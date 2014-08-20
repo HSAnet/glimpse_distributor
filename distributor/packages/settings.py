@@ -1,7 +1,6 @@
 from django.conf import settings
-from os.path import expanduser
 
-STORAGE_ROOT = getattr(settings, 'PACKAGES_STORAGE_ROOT', '%s/packages' % (expanduser('~')))
+STORAGE_ROOT = getattr(settings, 'PACKAGES_STORAGE_ROOT', '/var/www/distributor/packages')
 
 CHANNEL_SETTINGS = getattr(settings, 'PACKAGE_CHANNEL_SETTINGS', {
     'ubuntu-trusty': 'UbuntuTrustyHandler',
