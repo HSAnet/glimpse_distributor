@@ -5,5 +5,7 @@ STORAGE_ROOT = getattr(settings, 'PACKAGES_STORAGE_ROOT', '/var/www/distributor/
 CHANNEL_SETTINGS = getattr(settings, 'PACKAGE_CHANNEL_SETTINGS', {
     'ubuntu-trusty': 'UbuntuTrustyHandler',
     'ubuntu-precise': 'UbuntuPreciseHandler',
-    'rpi-raspbian': 'RpiRaspbianHandler'
+    'rpi-raspbian': 'RpiRaspbianHandler',
+    'rpi-raspbian-jessie': 'RpiRaspbianJessieHandler',
+    'debian-jessie': 'DebianJessieHandler'
 })
