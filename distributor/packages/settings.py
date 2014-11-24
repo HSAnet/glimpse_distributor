@@ -7,5 +7,7 @@ CHANNEL_SETTINGS = getattr(settings, 'PACKAGE_CHANNEL_SETTINGS', {
     'ubuntu-precise': 'UbuntuPreciseHandler',
     'rpi-raspbian': 'RpiRaspbianHandler',
     'rpi-raspbian-jessie': 'RpiRaspbianJessieHandler',
-    'debian-jessie': 'DebianJessieHandler'
+    'debian-jessie': 'DebianJessieHandler',
+    'ubuntu-trusty-armhf': 'UbuntuTrustyArmhfHandler',
+    'ubuntu-utopic': 'UbuntuUtopicHandler',
 })
