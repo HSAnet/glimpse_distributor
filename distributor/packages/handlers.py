@@ -60,7 +60,7 @@ class UbuntuTrustyArmhfHandler(UbuntuTrustyHandler):
     file_path = 'ubuntu-trusty-armhf'
 
 
-class UbuntuUtopicyHandler(UbuntuTrustyHandler):
+class UbuntuUtopicHandler(UbuntuTrustyHandler):
     file_path = 'ubuntu-utopic'
 
 
