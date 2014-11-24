@@ -56,6 +56,14 @@ class UbuntuPreciseHandler(UbuntuTrustyHandler):
     file_path = 'ubuntu-percise'
 
 
+class UbuntuTrustyArmhfHandler(UbuntuTrustyHandler):
+    file_path = 'ubuntu-trusty-armhf'
+
+
+class UbuntuUtopicyHandler(UbuntuTrustyHandler):
+    file_path = 'ubuntu-utopic'
+
+
 class RpiRaspbianHandler(UbuntuTrustyHandler):
     file_path = 'rpi-raspbian'
 
