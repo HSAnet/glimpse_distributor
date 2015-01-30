@@ -74,3 +74,7 @@ class RpiRaspbianJessieHandler(UbuntuTrustyHandler):
 
 class DebianJessieHandler(UbuntuTrustyHandler):
     file_path = 'debian-jessie'
+
+
+class WindowsHandler(PackageUploadHandler):
+    file_path = 'windows'

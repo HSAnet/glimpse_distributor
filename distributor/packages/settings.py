@@ -10,4 +10,5 @@ CHANNEL_SETTINGS = getattr(settings, 'PACKAGE_CHANNEL_SETTINGS', {
     'debian-jessie': 'DebianJessieHandler',
     'ubuntu-trusty-armhf': 'UbuntuTrustyArmhfHandler',
     'ubuntu-utopic': 'UbuntuUtopicHandler',
+    'windows': 'WindowsHandler'
 })
