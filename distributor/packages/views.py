@@ -5,7 +5,7 @@ from django.views.generic.edit import View, BaseFormView
 
 from distributor.packages import handlers
 from distributor.packages.forms import PackageUploadForm
-from distributor.packages.settings import CHANNEL_SETTINGS
+from distributor.packages.settings import CHANNEL_SETTINGS,BRANCHES
 
 
 class PackageVersionView(View):
@@ -21,7 +21,14 @@ class PackageUploadView(BaseFormView):
     form_class = PackageUploadForm
 
     def get(self, request, *args, **kwargs):
-        return HttpResponseBadRequest('Internal service url, please see documentation on how to communicate.')
+        if "branch" not in request.GET:
+            return HttpResponseBadRequest('Internal service url, please see documentation on how to communicate.')
+
+        if request.GET["branch"] in BRANCHES:
+            return HttpResponse()
+        else:
+            return HttpResponseBadRequest()
+
 
     def select_handler(self, raw_channel):
         if raw_channel in CHANNEL_SETTINGS:
@@ -40,7 +47,7 @@ class PackageUploadView(BaseFormView):
         except Exception as e:
             return self.response(False, {'Selector': str(e)})
         else:
-            handler.handle_upload(form.cleaned_data.get('package'), self.request.FILES['package'])
+            handler.handle_upload(form.cleaned_data.get('package'), self.request.FILES['package'], form.cleaned_data.get('branch'))
             return self.response(True)
 
     def form_invalid(self, form):

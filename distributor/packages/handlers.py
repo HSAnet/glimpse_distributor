@@ -2,7 +2,7 @@ import os
 import errno
 import subprocess
 
-from distributor.packages.settings import STORAGE_ROOT
+from distributor.packages.settings import BRANCHES
 
 
 def mkdir_p(path):
@@ -18,17 +18,20 @@ class PackageUploadHandler(object):
     file_path = None
 
     @classmethod
-    def handle_upload(self, package_name, package_file):
+    def handle_upload(self, package_name, package_file, branch):
         print(package_name, package_file)
         print(type(package_name), type(package_file))
-        self.store_upload(package_file)
+        self.store_upload(package_file, branch)
 
     @classmethod
-    def store_upload(self, package_file):
+    def store_upload(self, package_file, branch):
         if self.file_path is None:
             raise Exception("Please define a file name for uploaded packages of this channel.")
 
-        absolute_dir = STORAGE_ROOT + '/' + self.file_path
+        if branch not in BRANCHES:
+            raise Exception("Branch not allowed")
+
+        absolute_dir = BRANCHES[branch] + '/' + self.file_path
         mkdir_p(absolute_dir)
 
         absolute_file_path = absolute_dir + '/' + package_file.name
