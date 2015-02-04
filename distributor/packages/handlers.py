@@ -39,10 +39,10 @@ class PackageUploadHandler(object):
         with open(absolute_file_path, 'wb') as f:
             f.write(package_file.read())
 
-        self.update_package_index()
+        self.update_package_index(BRANCHES[branch])
 
     @classmethod
-    def update_package_index(self):
+    def update_package_index(self, cwd):
         pass
 
 
@@ -50,9 +50,9 @@ class UbuntuTrustyHandler(PackageUploadHandler):
     file_path = 'ubuntu-trusty'
 
     @classmethod
-    def update_package_index(self):
+    def update_package_index(self, cwd):
         command = "dpkg-scanpackages %s /dev/null | gzip > %s/Packages.gz" % (self.file_path, self.file_path)
-        subprocess.call(command, cwd=STORAGE_ROOT, shell=True)
+        subprocess.call(command, cwd=cwd, shell=True)
 
 
 class UbuntuPreciseHandler(UbuntuTrustyHandler):
