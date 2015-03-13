@@ -90,3 +90,58 @@ MEDIA_URL = '/media/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'deploy/static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'deploy/media')
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': True,
+    'formatters': {
+        'verbose': {
+            'format': '[%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d]: %(message)s'
+        },
+        'simple': {
+            'format': '[%(levelname)s]: %(message)s'
+        },
+    },
+    'filters': {
+        'require_debug_false': {
+            '()': 'django.utils.log.RequireDebugFalse'
+        },
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue'
+        }
+    },
+    'handlers': {
+        'glimpse_file': {
+            'level': 'WARNING',
+            'filters': ['require_debug_false'],
+            'class': 'logging.handlers.WatchedFileHandler',
+            'filename': os.path.join(BASE_DIR, 'deploy/logs/glimpse.log'),
+            'formatter': 'verbose'
+        },
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
+        'request_file': {
+           'level': 'WARNING',
+           'filters': ['require_debug_false'],
+           'class': 'logging.handlers.WatchedFileHandler',
+           'filename': os.path.join(BASE_DIR, 'deploy/logs/request.log'),
+           'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'glimpse.default': {
+            'level': 'DEBUG',
+            'handlers': ['console', 'glimpse_file'],
+            'propagate': True,
+        },
+        'django.request': {
+           'handlers': ['request_file'],
+           'level': 'WARNING',
+           'propagate': True,
+       },
+    }
+}
