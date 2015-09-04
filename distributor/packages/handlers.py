@@ -2,7 +2,7 @@ import os
 import errno
 import subprocess
 
-from distributor.packages.settings import PACKAGE_BRANCHES,DEBUG_SYMBOL_BRANCHES
+from distributor.packages.settings import PACKAGE_BRANCHES,DEBUG_SYMBOLS_STORAGE_ROOT
 
 
 def mkdir_p(path):
@@ -14,17 +14,29 @@ def mkdir_p(path):
         else: raise
 
 
+class DebugSymbolsUploadHandler(object):
+    file_path = DEBUG_SYMBOLS_STORAGE_ROOT
+
+    @classmethod
+    def handle_upload(self, debug_symbols_file):
+        # store debug symbols to filesystem
+        mkdir_p(self.file_path)
+        absolute_file_path = self.file_path + '/' + debug_symbols_file.name
+        with open(absolute_file_path, 'wb') as f:
+            f.write(debug_symbols_file.read())
+
+
 class PackageUploadHandler(object):
     file_path = None
 
     @classmethod
-    def handle_upload(self, package_name, package_file, branch, debug_symbols_file):
+    def handle_upload(self, package_name, package_file, branch):
         print(package_name, package_file)
         print(type(package_name), type(package_file))
-        self.store_upload(package_file, branch, debug_symbols_file)
+        self.store_upload(package_file, branch)
 
     @classmethod
-    def store_upload(self, package_file, branch, debug_symbols_file):
+    def store_upload(self, package_file, branch):
         if self.file_path is None:
             raise Exception("Please define a file name for uploaded packages of this channel.")
 
@@ -37,13 +49,6 @@ class PackageUploadHandler(object):
         absolute_file_path = absolute_dir + '/' + package_file.name
         with open(absolute_file_path, 'wb') as f:
             f.write(package_file.read())
-
-        # store debug symbols to filesystem
-        absolute_dir = DEBUG_SYMBOL_BRANCHES[branch] + '/' + self.file_path
-        mkdir_p(absolute_dir)
-        absolute_file_path = absolute_dir + '/' + debug_symbols_file.name
-        with open(absolute_file_path, 'wb') as f:
-            f.write(debug_symbols_file.read())
 
         self.update_package_index(PACKAGE_BRANCHES[branch])
 
@@ -71,6 +76,10 @@ class UbuntuTrustyArmhfHandler(UbuntuTrustyHandler):
 
 class UbuntuUtopicHandler(UbuntuTrustyHandler):
     file_path = 'ubuntu-utopic'
+
+
+class UbuntuVividHandler(UbuntuTrustyHandler):
+    file_path = 'ubuntu-vivid'
 
 
 class RpiRaspbianHandler(UbuntuTrustyHandler):

@@ -4,8 +4,29 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from django.views.generic.edit import View, BaseFormView
 
 from distributor.packages import handlers
-from distributor.packages.forms import PackageUploadForm
+from distributor.packages.forms import PackageUploadForm,DebugSymbolsUploadForm
 from distributor.packages.settings import CHANNEL_SETTINGS,PACKAGE_BRANCHES
+
+
+class DebugSymbolsUploadView(BaseFormView):
+    form_class = DebugSymbolsUploadForm
+
+    def form_valid(self, form):
+        handlers.DebugSymbolsUploadHandler.handle_upload(self.request.FILES['debug_symbols'])
+        return self.response(True)
+
+    def form_invalid(self, form):
+        return self.response(False, form.errors)
+
+    def response(self, success, errors={}):
+        data = {
+            'status': 'error'
+        }
+        if success:
+            data['status'] = 'ok'
+        else:
+            data['errors'] = errors
+        return HttpResponse(json.dumps(data))
 
 
 class PackageVersionView(View):
@@ -46,7 +67,7 @@ class PackageUploadView(BaseFormView):
         except Exception as e:
             return self.response(False, {'Selector': str(e)})
         else:
-            handler.handle_upload(form.cleaned_data.get('package'), self.request.FILES['package'], form.cleaned_data.get('branch'), form.request.FILES('debug_symbols'))
+            handler.handle_upload(form.cleaned_data.get('package'), self.request.FILES['package'], form.cleaned_data.get('branch'))
             return self.response(True)
 
     def form_invalid(self, form):
