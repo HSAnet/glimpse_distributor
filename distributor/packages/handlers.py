@@ -1,6 +1,7 @@
 import os
 import errno
 import subprocess
+import tarfile
 
 from distributor.packages.settings import PACKAGE_BRANCHES,DEBUG_SYMBOLS_STORAGE_ROOT
 
@@ -21,9 +22,8 @@ class DebugSymbolsUploadHandler(object):
     def handle_upload(self, debug_symbols_file):
         # store debug symbols to filesystem
         mkdir_p(self.file_path)
-        absolute_file_path = self.file_path + '/' + debug_symbols_file.name
-        with open(absolute_file_path, 'wb') as f:
-            f.write(debug_symbols_file.read())
+        tar = tarfile.open(mode="r:gz", fileobj=debug_symbols_file)
+        tar.extractall(self.file_path)
 
 
 class PackageUploadHandler(object):

@@ -9,4 +9,3 @@ class PackageUploadForm(forms.Form):
 
 class DebugSymbolsUploadForm(forms.Form):
     debug_symbols = forms.FileField()
- 

@@ -24,9 +24,10 @@ class DebugSymbolsUploadView(BaseFormView):
         }
         if success:
             data['status'] = 'ok'
+            return HttpResponse(json.dumps(data))
         else:
             data['errors'] = errors
-        return HttpResponse(json.dumps(data))
+            return HttpResponseBadRequest(json.dumps(data))
 
 
 class PackageVersionView(View):
@@ -79,7 +80,7 @@ class PackageUploadView(BaseFormView):
         }
         if success:
             data['status'] = 'ok'
+            return HttpResponse(json.dumps(data))
         else:
             data['errors'] = errors
-        return HttpResponse(json.dumps(data))
-
+            return HttpResponseBadRequest(json.dumps(data))
